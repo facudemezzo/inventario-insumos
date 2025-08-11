@@ -15,6 +15,8 @@ interface StockEntry {
   quantity: number;
   unit: string;
 }
+// Devuelve la ruta correcta desde /public/imagenes
+const imgUrl = (name?: string) => (name ? `${import.meta.env.BASE_URL}imagenes/${name}` : '');
 
 const products: Product[] = [
   // Insumos Enológicos 1
@@ -451,17 +453,18 @@ function App() {
             </h2>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            {selectedProduct.images.map((image, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-4 shadow-sm">
-                <img
-                  src={`https://images.pexels.com/photos/4946515/pexels-photo-4946515.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop`}
-                  alt={selectedProduct.description}
-                  className="w-64 h-48 object-cover rounded-lg"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-wrap justify-center gap-6 mb-8">
+         {selectedProduct.images.map((name, index) => (
+           <div key={index} className="bg-gray-50 rounded-xl p-4 shadow-sm">
+            <img
+            src={imgUrl(name)}
+            alt={`${selectedProduct.description} - ${name}`}
+            className="w-64 h-48 object-cover rounded-lg"
+            loading="lazy"
+            />
+      </div>
+     ))}
+     </div>
 
           <div className="text-center space-y-4">
             {!showStockForm ? (
